@@ -20,7 +20,7 @@
         </div>
 
         @auth
-            @includeIf('app.components.footer');
+            @includeIf('app.components.footer')
         @endauth
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

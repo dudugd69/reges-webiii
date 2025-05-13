@@ -1,8 +1,8 @@
 @extends('app.layouts.template')
 
-@section('title', 'Login')
+@section('title', 'Dashboard')
 
 @section('content')
-    @component('app.components.form-login')
+    @component('app.components.dashboard')
     @endcomponent
 @endsection
