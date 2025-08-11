@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Services\UserServices;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function __construct(private UserServices $userServices){}
+
     // Mostra o formulário de criação de usuário
     public function create()
     {
@@ -20,7 +24,7 @@ class UserController extends Controller
         // valida os dados da requisição
         $data = $request->validated();
         // cadastra o usuário
-        User::create($data);
+        $this->userServices->store($data);
         // redireciona em caso de sucesso
         return redirect()->route('user.create')->with('success', 'Cadastro realizado com sucesso! Faça login para acessar o sistema.');
     }
