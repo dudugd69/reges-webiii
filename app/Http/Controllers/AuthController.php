@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Services\AuthServices;
 
 class AuthController extends Controller
 {
+
+    public function __construct(public AuthServices $authServices){}
+
     public function index()
     {
         return view('app.login');
@@ -15,31 +17,17 @@ class AuthController extends Controller
 
     public function login(AuthRequest $request)
     {
-        // Valida a requisição
         $credentials = $request->validated();
 
-        /*
-         * Auth::attempt() = Facade, utilizar dentro de um controller ou services
-         * auth()->attempt() = Helper, utilizar dentro de views
-         */
-
-        // Tenta autenticar o usuário
-        if (Auth::attempt($credentials)) {
-            // Redireciona para o dashboard
+        if ($this->authServices->login($credentials)) {
             return redirect()->route('dashboard')->with('success', 'Login realizado com sucesso!');
         }
-
-        // Se falhar, redireciona de volta com erro
         return back()->withErrors(['email' => 'E-mail ou senha inválidos.'])->withInput();
-
     }
 
     public function logout()
     {
-        // Faz logout do usuário
-        Auth::logout();
-
-        // Redireciona para a página de login
+        $this->authServices->logout();
         return redirect()->route('login')->with('success', 'Logout realizado com sucesso!');
     }
 

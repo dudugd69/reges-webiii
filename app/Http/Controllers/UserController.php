@@ -21,29 +21,25 @@ class UserController extends Controller
     // Armazena os dados do usuário
     public function store(UserRequest $request)
     {
-        // valida os dados da requisição
         $data = $request->validated();
-        // cadastra o usuário
         $this->userServices->store($data);
-        // redireciona em caso de sucesso
         return redirect()->route('user.create')->with('success', 'Cadastro realizado com sucesso! Faça login para acessar o sistema.');
     }
 
     // Mostra o formulário de edição de usuário
     public function edit()
     {
-        $user = auth()->user();
+        $user = $this->userServices->edit();
         return view('app.users.edit', compact('user'));
     }
 
     // Atualiza os dados do usuário
     public function update(UserRequest $request)
     {
-        // valida os dados da requisição
+
+        $user = auth()->user();
         $data = $request->validated();
-        // atualiza o usuário
-        auth()->user()->update($data);
-        // redireciona em caso de sucesso
+        $this->userServices->update($data, $user);
         return redirect()->route('user.edit')->with('success', 'Dados atualizados com sucesso!');
 
     }
