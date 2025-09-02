@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Services\CategoryServices;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct(public CategoryServices $categoryServices){}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $categories = $this->categoryServices->index();
+        return view('app.categories.index', compact('categories'));
     }
 
     /**
@@ -20,15 +25,17 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('app.categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $data = $request->validated();
+        $this->categoryServices->store($data);
+        return redirect()->route('categories.create')->with('success', 'Categoria criada com sucesso!');
     }
 
     /**

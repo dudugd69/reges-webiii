@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">
             Shopping List
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,8 +13,8 @@
                         Categoria
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="#">Visualizar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('categories.create') }}">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('categories.index') }}">Visualizar</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
